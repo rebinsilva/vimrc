@@ -4,7 +4,7 @@ My Vim config files go here
 ## Dependencies
 	1. Vim-plug
 	2. Nerd fonts (optional)
-	3. linterers for syntastic(optional)
+	3. Linterers for syntastic(optional)
 
 ## Installation
 
