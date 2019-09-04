@@ -9,6 +9,7 @@ My Vim config files go here
 ## Installation
 
 Install vim-plug using(it is better to check their website for installation):
+
 `curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim`
 
