@@ -31,6 +31,9 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 " Plug 'nvie/vim-flake8'
 Plug 'lifepillar/vim-solarized8'
 Plug 'ryanoasis/vim-devicons'
+Plug 'vimwiki/vimwiki'
+Plug 'itchyny/calendar.vim'
+" Plug 'majutsushi/tagbar'
 
 " Initialize plugin system
 call plug#end()
@@ -93,11 +96,65 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " For netrw explorer
 let g:netrw_list_hide = '\.'
 
+" For calendar.vim
+let g:calendar_google_calendar = 1
+let g:calendar_google_task = 1
+
+" For Cscope
+if has("cscope")
+	set csprg=/usr/local/bin/cscope
+	set csto=0
+	set cst
+	set nocsverb
+	" add any database in current directory
+	if filereadable("cscope.out")
+	    cs add cscope.out
+	" else add database pointed to by environment
+	elseif $CSCOPE_DB != ""
+	    cs add $CSCOPE_DB
+	endif
+	set csverb
+endif
+" The following maps all invoke one of the following cscope search types:
+"
+"	0 or s: Find this C symbol
+"	1 or g: Find this definition
+"	2 or d: Find functions called by this function
+"	3 or c: Find functions calling this function
+"	4 or t: Find this text string
+"	6 or e: Find this egrep pattern
+"	7 or f: Find this file
+"	8 or i: Find files #including this file
+"	9 or a: Find places where this symbol is assigned a value
+nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>a :cs find a <C-R>=expand("<cword>")<CR><CR>
+
+nmap <C-Space>s :vert scs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-Space>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-Space>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-Space>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-Space>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-Space>f :vert scs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-Space>i :vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <C-Space>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
+nmap <C-Space>a :vert scs find a <C-R>=expand("<cword>")<CR><CR>
+
+" au DirChanged * if filereadable("cscope.out") cs add cscope.out endif
+
+
 filetype plugin on
 filetype indent on
 syntax enable
 
 packadd! matchit
+packadd! termdebug
 runtime! ftplugin/man.vim
 
 set background=dark
@@ -114,8 +171,8 @@ set linebreak
 set clipboard=unnamed
 set incsearch
 
-nmap <F2> :nohls<ENTER>
-imap <F2> <ESC>:nohls<ENTER>i
+nmap <F2> :set hls!<ENTER>
+imap <F2> <ESC>:set hls!<ENTER>a
 map  <silent> <F7>    <Esc>:cprevious<CR>
 map  <silent> <F8>    <Esc>:cnext<CR>
 
