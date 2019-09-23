@@ -1,3 +1,5 @@
+" vim:set foldmethod=marker:
+"
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
@@ -34,6 +36,9 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'vimwiki/vimwiki'
 Plug 'itchyny/calendar.vim'
 " Plug 'majutsushi/tagbar'
+" Plug 'lifepillar/gruvbox' " Change i3 to this colorscheme
+Plug 'gruvbox-community/gruvbox' " Change i3 to this colorscheme
+Plug 'vim-latex/vim-latex'
 
 " Initialize plugin system
 call plug#end()
@@ -51,30 +56,20 @@ call plug#end()
 filetype plugin indent on    " required
 "filetype plugin on
 
-" For plugin YouCompleteMe
+" For plugin YouCompleteMe {{{
 let g:ycm_confirm_extra_conf=0
 let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
-" For plugin airline
-let g:airline_powerline_fonts = 1
-
-" For plugin airline-themes
-let g:airline_theme='solarized_flood'
-
-" For plugin vim-indent-guides
-"let g:indent_guides_enable_on_vim_startup = 1
-"let g:indent_guides_start_level = 2
-"let g:indent_guides_guide_size = 1
-
-" For plugin c.vim
-" \cfr changed to \cafr at /home/silva/.vim/c-support/templates/cpp.statements.template and c.statements.template due to map clash
-let g:C_UseTool_cmake    = 'yes'
-let g:C_UseTool_doxygen  = 'yes'
-let g:C_CFlags = '-Wall -Wextra -Werror -g -O0 -std=c++11 -xc++'
 let g:ycm_error_symbol = 'xx'
-
-" For plugin syntastic
+" }}}
+" For plugin airline {{{
+let g:airline_powerline_fonts = 1
+" }}}
+" For plugin airline-themes {{{
+" let g:airline_theme='solarized_flood'
+let g:airline_theme='gruvbox'
+" }}}
+" For plugin syntastic {{{
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -83,26 +78,27 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_c_compiler_options = "-std=gnu11"
-
-" For Ale
-" let g:ale_linters = {
-" \   'python3': ['pylint'],
-" \}
-
-" For plugin nerdTree
+let g:ycm_show_diagnostics_ui = 0 " Disabling ycm checkers for syntastic
+set sessionoptions-=blank "To remove error window from getting saved
+let g:syntastic_shell = "/bin/sh"
+" }}}
+" For plugin nerdTree {{{
 autocmd vimenter * NERDTree
 map <C-q> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-" For netrw explorer
-let g:netrw_list_hide = '\.'
-
-" For calendar.vim
+" }}}
+" For calendar.vim {{{
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
+" }}}
+" For plugin Vimwiki {{{
+let g:vimwiki_use_calendar = 1
+let g:vimwiki_use_mouse = 1
+" }}}
 
 " For Cscope
 if has("cscope")
-	set csprg=/usr/local/bin/cscope
+	set csprg=/usr/bin/cscope
 	set csto=0
 	set cst
 	set nocsverb
@@ -114,7 +110,6 @@ if has("cscope")
 	    cs add $CSCOPE_DB
 	endif
 	set csverb
-endif
 " The following maps all invoke one of the following cscope search types:
 "
 "	0 or s: Find this C symbol
@@ -126,27 +121,28 @@ endif
 "	7 or f: Find this file
 "	8 or i: Find files #including this file
 "	9 or a: Find places where this symbol is assigned a value
-nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-nmap <C-\>a :cs find a <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+	nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+	nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-\>a :cs find a <C-R>=expand("<cword>")<CR><CR>
+	
+	nmap <C-Space>s :vert scs find s <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-Space>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-Space>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-Space>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-Space>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-Space>f :vert scs find f <C-R>=expand("<cfile>")<CR><CR>
+	nmap <C-Space>i :vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+	nmap <C-Space>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-Space>a :vert scs find a <C-R>=expand("<cword>")<CR><CR>
 
-nmap <C-Space>s :vert scs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-Space>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-Space>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-Space>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-Space>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-Space>f :vert scs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <C-Space>i :vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nmap <C-Space>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
-nmap <C-Space>a :vert scs find a <C-R>=expand("<cword>")<CR><CR>
-
-" au DirChanged * if filereadable("cscope.out") cs add cscope.out endif
+	" autocmd DirChanged * if filereadable("cscope.out") | cs add cscope.out | endif
+endif
 
 
 filetype plugin on
@@ -158,13 +154,12 @@ packadd! termdebug
 runtime! ftplugin/man.vim
 
 set background=dark
-colorscheme solarized8
+colorscheme gruvbox
 
 let python_highlight_all=1
 syntax on
 
 set mouse=a
-"set expandtab  "needed for indent plugin but still annoying
 set number
 set showcmd
 set linebreak
@@ -175,24 +170,3 @@ nmap <F2> :set hls!<ENTER>
 imap <F2> <ESC>:set hls!<ENTER>a
 map  <silent> <F7>    <Esc>:cprevious<CR>
 map  <silent> <F8>    <Esc>:cnext<CR>
-
-" au BufNewFile *.cpp read /home/silva/.vim/macro.vim
-" au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-" au BufNewFile,BufRead *.py
-"     \ set tabstop=4
-"     \ set softtabstop=4
-"     \ set shiftwidth=4
-"     \ set textwidth=79
-"     \ set expandtab
-"     \ set autoindent
-"     \ set fileformat=unix
-
-"python with virtualenv support
-" py << EOF
-" import os
-" import sys
-" if 'VIRTUAL_ENV' in os.environ:
-"   project_base_dir = os.environ['VIRTUAL_ENV']
-"   activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-"   execfile(activate_this, dict(__file__=activate_this))
-" EOF

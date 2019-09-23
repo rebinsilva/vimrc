@@ -1,1 +1,1 @@
-set gfn=Monospace\ 14
+set gfn=UbuntuMono\ Nerd\ Font\ Mono\ 18
