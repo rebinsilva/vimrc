@@ -38,7 +38,8 @@ Plug 'itchyny/calendar.vim'
 " Plug 'majutsushi/tagbar'
 " Plug 'lifepillar/gruvbox' " Change i3 to this colorscheme
 Plug 'gruvbox-community/gruvbox' " Change i3 to this colorscheme
-Plug 'vim-latex/vim-latex'
+" Plug 'vim-latex/vim-latex'
+Plug 'lervag/vimtex'
 
 " Initialize plugin system
 call plug#end()
@@ -96,7 +97,7 @@ let g:vimwiki_use_calendar = 1
 let g:vimwiki_use_mouse = 1
 " }}}
 
-" For Cscope
+" For Cscope {{{
 if has("cscope")
 	set csprg=/usr/bin/cscope
 	set csto=0
@@ -121,15 +122,15 @@ if has("cscope")
 "	7 or f: Find this file
 "	8 or i: Find files #including this file
 "	9 or a: Find places where this symbol is assigned a value
-	nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-	nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-	nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-	nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-	nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-	nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-	nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-	nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-	nmap <C-\>a :cs find a <C-R>=expand("<cword>")<CR><CR>
+	nmap <Space>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+	nmap <Space>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+	nmap <Space>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+	nmap <Space>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+	nmap <Space>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+	nmap <Space>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+	nmap <Space>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+	nmap <Space>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+	nmap <Space>a :cs find a <C-R>=expand("<cword>")<CR><CR>
 	
 	nmap <C-Space>s :vert scs find s <C-R>=expand("<cword>")<CR><CR>
 	nmap <C-Space>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>
@@ -140,10 +141,8 @@ if has("cscope")
 	nmap <C-Space>i :vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 	nmap <C-Space>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
 	nmap <C-Space>a :vert scs find a <C-R>=expand("<cword>")<CR><CR>
-
-	" autocmd DirChanged * if filereadable("cscope.out") | cs add cscope.out | endif
 endif
-
+" }}}
 
 filetype plugin on
 filetype indent on
@@ -151,6 +150,8 @@ syntax enable
 
 packadd! matchit
 packadd! termdebug
+packadd! shellmenu
+packadd! justify
 runtime! ftplugin/man.vim
 
 set background=dark
@@ -165,6 +166,11 @@ set showcmd
 set linebreak
 set clipboard=unnamed
 set incsearch
+set softtabstop=4
+set cursorline
+set mousefocus
+set mousehide
+set modeline
 
 nmap <F2> :set hls!<ENTER>
 imap <F2> <ESC>:set hls!<ENTER>a
