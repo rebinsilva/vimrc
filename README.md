@@ -8,6 +8,8 @@ My Vim config files go here
 
 ## Installation
 
+Copy these files(vimrc,gvimrc) into ~/.vim
+
 Install vim-plug using(it is better to check their website for installation):
 ```
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
