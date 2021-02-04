@@ -47,6 +47,7 @@ Plug 'sbdchd/neoformat'
 Plug 'lervag/vimtex'
 Plug 'let-def/vimbufsync'
 Plug 'whonore/coqtail'
+Plug 'puremourning/vimspector'
 
 " Plug 'SkyLeach/pudb.vim'
 " Plug 'rebinsilva/VimFStar', {'branch': 'ide', 'for': 'fstar'}
@@ -152,6 +153,10 @@ inoremap <silent> ^^ ^^<c-r>=UltiSnips#Anon('^{$1}$0', '^^', '', 'i')<cr>
 
 nnoremap <localleader>lt :call vimtex#fzf#run()<cr>
 " let g:vimtex_compiler_progname = 'nvr'
+" }}}
+" For plugin Vimspector {{{
+" packadd! vimspector
+let g:vimspector_enable_mappings = 'HUMAN'
 " }}}
 
 " For Cscope {{{
@@ -282,7 +287,7 @@ set mouse=a
 set number
 set showcmd
 set linebreak
-set clipboard+=unnamed
+set clipboard=unnamedplus
 set incsearch
 set softtabstop=4
 set cursorline
